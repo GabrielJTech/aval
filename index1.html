@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title>Avaliação Física PROESP-Br</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+            color: #000;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1, h2 {
+            text-align: center;
+        }
+        .form-group {
+            margin-bottom: 12px;
+        }
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: bold;
+        }
+        input, select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        .group {
+            border: 1px solid #ddd;
+            padding: 12px;
+            margin-bottom: 18px;
+            border-radius: 4px;
+            background: #fafafa;
+        }
+        .group h3 { margin-top: 0; }
+        .error {
+            color: red;
+            font-size: 13px;
+            margin-top: 5px;
+            min-height: 18px;
+        }
+        .nav-buttons {
+            text-align: center;
+            margin-top: 10px;
+        }
+        button {
+            display: inline-block;
+            width: 160px;
+            height: 44px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 8px;
+        }
+        button:hover { background: #0056b3; }
+        .hidden { display: none; }
+        .summary {
+            background: #e9ecef;
+            padding: 16px;
+            border-radius: 6px;
+        }
+        @media (max-width: 520px) {
+            button { width: 100%; margin: 6px 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Avaliação Física</h1>
+
+        <div id="form1">
+            <h2>Identificação e Triagem</h2>
+
+            <div class="form-group">
+                <label for="nome">Nome Completo:</label>
+                <input type="text" id="nome" />
+                <div class="error" id="error-nome"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="idade">Idade (anos):</label>
+                <input type="number" id="idade" min="10" max="100" />
+                <div class="error" id="error-idade"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="sexo">Sexo:</label>
+                <select id="sexo">
+                    <option value="">Selecione</option>
+                    <option value="Masculino">Masculino</option>
+                    <option value="Feminino">Feminino</option>
+                </select>
+                <div class="error" id="error-sexo"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="escola">Nome da Escola / Turma:</label>
+                <input type="text" id="escola" />
+                <div class="error" id="error-escola"></div>
+            </div>
+
+            <div class="group">
+                <h3>PAR-Q Simplificado</h3>
+
+                <div class="form-group">
+                    <label for="parq1">1. Algum médico já disse que você tem problema cardíaco?</label>
+                    <select id="parq1">
+                        <option value="">Selecione</option>
+                        <option value="Sim">Sim</option>
+                        <option value="Não">Não</option>
+                    </select>
+                    <div class="error" id="error-parq1"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="parq2">2. Sente dor no peito ao fazer atividade física?</label>
+                    <select id="parq2">
+                        <option value="">Selecione</option>
+                        <option value="Sim">Sim</option>
+                        <option value="Não">Não</option>
+                    </select>
+                    <div class="error" id="error-parq2"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="parq3">3. Tem tonturas ou desmaios com frequência?</label>
+                    <select id="parq3">
+                        <option value="">Selecione</option>
+                        <option value="Sim">Sim</option>
+                        <option value="Não">Não</option>
+                    </select>
+                    <div class="error" id="error-parq3"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="parq4">4. Possui problema ósseo ou articular que pode piorar com exercícios?</label>
+                    <select id="parq4">
+                        <option value="">Selecione</option>
+                        <option value="Sim">Sim</option>
+                        <option value="Não">Não</option>
+                    </select>
+                    <div class="error" id="error-parq4"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="parq5">5. Usa medicamentos para coração ou pressão alta?</label>
+                    <select id="parq5">
+                        <option value="">Selecione</option>
+                        <option value="Sim">Sim</option>
+                        <option value="Não">Não</option>
+                    </select>
+                    <div class="error" id="error-parq5"></div>
+                </div>
+            </div>
+
+            <div class="nav-buttons">
+                <button id="next1" type="button">Próximo</button>
+            </div>
+        </div>
+
+        <div id="form2" class="hidden">
+            <h2>Antropometria e Testes Motores</h2>
+
+            <div class="group">
+                <h3>Antropometria</h3>
+
+                <div class="form-group">
+                    <label for="peso">Peso (kg):</label>
+                    <input type="number" id="peso" min="30" max="200" step="0.1" />
+                    <div class="error" id="error-peso"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="altura">Altura (cm):</label>
+                    <input type="number" id="altura" min="100" max="250" step="0.1" />
+                    <div class="error" id="error-altura"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="imc">IMC (calculado automaticamente):</label>
+                    <input type="text" id="imc" readonly />
+                    <div class="error" id="error-imc"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="envergadura">Envergadura (cm):</label>
+                    <input type="number" id="envergadura" min="100" max="250" step="0.1" />
+                    <div class="error" id="error-envergadura"></div>
+                </div>
+            </div>
+
+            <div class="group">
+                <h3>Testes de Força</h3>
+                <div class="form-group">
+                    <label for="forca-braco">Força de Braço (kg):</label>
+                    <input type="number" id="forca-braco" min="0" max="200" step="0.1" />
+                    <div class="error" id="error-forca-braco"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="forca-perna">Força de Perna (kg):</label>
+                    <input type="number" id="forca-perna" min="0" max="300" step="0.1" />
+                    <div class="error" id="error-forca-perna"></div>
+                </div>
+            </div>
+
+            <div class="group">
+                <h3>Velocidade</h3>
+                <div class="form-group">
+                    <label for="velocidade-40m">Velocidade 40m (s):</label>
+                    <input type="number" id="velocidade-40m" min="0" max="20" step="0.01" />
+                    <div class="error" id="error-velocidade-40m"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="agilidade">Agilidade (s):</label>
+                    <input type="number" id="agilidade" min="0" max="30" step="0.01" />
+                    <div class="error" id="error-agilidade"></div>
+                </div>
+            </div>
+
+            <div class="group">
+                <h3>Flexibilidade</h3>
+                <div class="form-group">
+                    <label for="sentar-alcancar">Sentar e Alcançar (cm):</label>
+                    <input type="number" id="sentar-alcancar" min="0" max="60" step="0.1" />
+                    <div class="error" id="error-sentar-alcancar"></div>
+                </div>
+            </div>
+
+            <div class="group">
+                <h3>Resistência Muscular</h3>
+                <div class="form-group">
+                    <label for="res-abdominal">Resistência Abdominal em 1 min (repetições):</label>
+                    <input type="number" id="res-abdominal" min="0" max="200" step="1" />
+                    <div class="error" id="error-res-abdominal"></div>
+                </div>
+            </div>
+
+            <div class="group">
+                <h3>Potência Superior</h3>
+                <div class="form-group">
+                    <label for="medicineball">Arremesso de Medicineball (m):</label>
+                    <input type="number" id="medicineball" min="0" max="20" step="0.01" />
+                    <div class="error" id="error-medicineball"></div>
+                </div>
+            </div>
+
+            <div class="group">
+                <h3>Potência Inferior</h3>
+                <div class="form-group">
+                    <label for="salto-horizontal">Salto Horizontal (cm):</label>
+                    <input type="number" id="salto-horizontal" min="0" max="400" step="0.1" />
+                    <div class="error" id="error-salto-horizontal"></div>
+                </div>
+            </div>
+
+            <div class="group">
+                <h3>Corrida Curta</h3>
+                <div class="form-group">
+                    <label for="corrida-20m">Corrida 20m (s):</label>
+                    <input type="number" id="corrida-20m" min="2" max="20" step="0.01" />
+                    <div class="error" id="error-corrida-20m"></div>
+                </div>
+            </div>
+
+            <div class="group">
+                <h3>Agilidade Quadrado</h3>
+                <div class="form-group">
+                    <label for="quadrado">Teste do Quadrado (s):</label>
+                    <input type="number" id="quadrado" min="0" max="30" step="0.01" />
+                    <div class="error" id="error-quadrado"></div>
+                </div>
+            </div>
+
+            <div class="group">
+                <h3>Resistência Aeróbica</h3>
+                <div class="form-group">
+                    <label for="corrida-6min">Corrida 6 Min (m):</label>
+                    <input type="number" id="corrida-6min" min="0" max="5000" step="1" />
+                    <div class="error" id="error-corrida-6min"></div>
+                </div>
+            </div>
+
+            <div class="nav-buttons">
+                <button id="prev2" type="button">Voltar</button>
+                <button id="next2" type="button">Próximo</button>
+            </div>
+        </div>
+
+        <div id="summary" class="hidden">
+            <h2>Resumo da Avaliação</h2>
+            <div class="summary" id="summary-content"></div>
+            <div class="nav-buttons">
+                <button id="restart" type="button">Reiniciar</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    function validateField(field, errorId, rules) {
+        const raw = field ? field.value : '';
+        const value = String(raw).trim();
+        const errorDiv = document.getElementById(errorId);
+        if (errorDiv) errorDiv.textContent = '';
+
+        if (rules.required && !value) {
+            if (errorDiv) errorDiv.textContent = 'Campo obrigatório.';
+            return false;
+        }
+
+        if (rules.type === 'number') {
+            const num = parseFloat(value);
+            if (value === '' || isNaN(num)) {
+                if (errorDiv) errorDiv.textContent = 'Deve ser um número.';
+                return false;
+            }
+            if (rules.min !== undefined && num < rules.min) {
+                if (errorDiv) errorDiv.textContent = `Valor mínimo: ${rules.min}.`;
+                return false;
+            }
+            if (rules.max !== undefined && num > rules.max) {
+                if (errorDiv) errorDiv.textContent = `Valor máximo: ${rules.max}.`;
+                return false;
+            }
+        } else {
+            if (rules.min !== undefined && value.length < rules.min) {
+                if (errorDiv) errorDiv.textContent = `Mínimo ${rules.min} caracteres.`;
+                return false;
+            }
+            if (rules.max !== undefined && value.length > rules.max) {
+                if (errorDiv) errorDiv.textContent = `Máximo ${rules.max} caracteres.`;
+                return false;
+            }
+        }
+        return true;
+    }
+
+    const parqIds = ["parq1","parq2","parq3","parq4","parq5"];
+    parqIds.forEach(id => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        el.addEventListener("change", (e) => {
+            const v = e.target.value;
+            if (v === "Sim") {
+                e.target.style.backgroundColor = "#FF8C8C"; 
+            } else if (v === "Não") {
+                e.target.style.backgroundColor = "#8DFF8D"; 
+            } else {
+                e.target.style.backgroundColor = "white";
+            }
+        });
+    });
+
+    function calcularIMC() {
+        const pesoVal = parseFloat(document.getElementById('peso').value);
+        const alturaVal = parseFloat(document.getElementById('altura').value);
+        const imcInput = document.getElementById('imc');
+
+        if (!isNaN(pesoVal) && !isNaN(alturaVal) && alturaVal > 0) {
+            const alturaM = alturaVal / 100;
+            const imc = pesoVal / (alturaM * alturaM);
+            const imcRounded = imc ? imc.toFixed(2) : '';
+            imcInput.value = imcRounded;
+
+            const num = parseFloat(imcRounded);
+            if (isNaN(num)) {
+                imcInput.style.backgroundColor = "white";
+            } else if (num < 18.5) imcInput.style.backgroundColor = "yellow";
+            else if (num <= 24.9) imcInput.style.backgroundColor = "#8DFF8D";
+            else if (num <= 29.9) imcInput.style.backgroundColor = "yellow";
+            else imcInput.style.backgroundColor = "red";
+        } else {
+            imcInput.value = '';
+            imcInput.style.backgroundColor = "white";
+        }
+    }
+
+    document.getElementById('peso').addEventListener('input', calcularIMC);
+    document.getElementById('altura').addEventListener('input', calcularIMC);
+
+
+    function showForm(id) {
+        document.querySelectorAll(".container > div").forEach(d => d.classList.add("hidden"));
+        const el = document.getElementById(id);
+        if (el) el.classList.remove("hidden");
+    }
+
+    document.getElementById("next1").addEventListener("click", () => {
+        const valid =
+            validateField(document.getElementById("nome"), "error-nome", {required:true}) &&
+            validateField(document.getElementById("idade"), "error-idade", {required:true, type:'number', min:10, max:100}) &&
+            validateField(document.getElementById("sexo"), "error-sexo", {required:true}) &&
+            validateField(document.getElementById("escola"), "error-escola", {required:true}) &&
+            validateField(document.getElementById("parq1"), "error-parq1", {required:true}) &&
+            validateField(document.getElementById("parq2"), "error-parq2", {required:true}) &&
+            validateField(document.getElementById("parq3"), "error-parq3", {required:true}) &&
+            validateField(document.getElementById("parq4"), "error-parq4", {required:true}) &&
+            validateField(document.getElementById("parq5"), "error-parq5", {required:true});
+
+        if (valid) showForm("form2");
+    });
+
+    document.getElementById("prev2").addEventListener("click", () => showForm("form1"));
+
+    document.getElementById("next2").addEventListener("click", () => {
+        const camposForm2 = [
+            ["peso", "error-peso", {required:true, type:'number', min:30, max:200}],
+            ["altura", "error-altura", {required:true, type:'number', min:100, max:250}],
+            ["envergadura", "error-envergadura", {required:true, type:'number', min:100, max:250}],
+            ["forca-braco", "error-forca-braco", {required:true, type:'number', min:0, max:200}],
+            ["forca-perna", "error-forca-perna", {required:true, type:'number', min:0, max:300}],
+            ["velocidade-40m", "error-velocidade-40m", {required:true, type:'number', min:0, max:20}],
+            ["agilidade", "error-agilidade", {required:true, type:'number', min:0, max:30}],
+            ["sentar-alcancar", "error-sentar-alcancar", {required:true, type:'number', min:0, max:60}],
+            ["res-abdominal", "error-res-abdominal", {required:true, type:'number', min:0, max:200}],
+            ["medicineball", "error-medicineball", {required:true, type:'number', min:0, max:20}],
+            ["salto-horizontal", "error-salto-horizontal", {required:true, type:'number', min:0, max:400}],
+            ["corrida-20m", "error-corrida-20m", {required:true, type:'number', min:2, max:20}],
+            ["quadrado", "error-quadrado", {required:true, type:'number', min:0, max:30}],
+            ["corrida-6min", "error-corrida-6min", {required:true, type:'number', min:0, max:5000}]
+        ];
+
+        let valid = true;
+        camposForm2.forEach(cfg => {
+            const field = document.getElementById(cfg[0]);
+            if (!validateField(field, cfg[1], cfg[2])) valid = false;
+        });
+
+        if (!valid) return;
+
+        gerarResumo();
+        showForm("summary");
+    });
+
+    function gerarResumo() {
+        const get = id => (document.getElementById(id) ? document.getElementById(id).value : '');
+        const summary = document.getElementById("summary-content");
+
+        summary.innerHTML = `
+            <h3>Identificação</h3>
+            <p><b>Nome:</b> ${get("nome")}</p>
+            <p><b>Idade:</b> ${get("idade")} anos</p>
+            <p><b>Sexo:</b> ${get("sexo")}</p>
+            <p><b>Escola/Turma:</b> ${get("escola")}</p>
+
+            <h3>PAR-Q</h3>
+            <p>1. Problema cardíaco: <b>${get("parq1")}</b></p>
+            <p>2. Dor no peito ao exercitar: <b>${get("parq2")}</b></p>
+            <p>3. Tonturas/desmaios: <b>${get("parq3")}</b></p>
+            <p>4. Problema ósseo/articular: <b>${get("parq4")}</b></p>
+            <p>5. Medicamentos para coração/pressão: <b>${get("parq5")}</b></p>
+
+            <h3>Antropometria</h3>
+            <p><b>Peso:</b> ${get("peso")} kg</p>
+            <p><b>Altura:</b> ${get("altura")} cm</p>
+            <p><b>IMC:</b> ${get("imc")}</p>
+            <p><b>Envergadura:</b> ${get("envergadura")} cm</p>
+
+            <h3>Testes Motores</h3>
+            <p><b>Força de Braço:</b> ${get("forca-braco")} kg</p>
+            <p><b>Força de Perna:</b> ${get("forca-perna")} kg</p>
+            <p><b>Velocidade 40m:</b> ${get("velocidade-40m")} s</p>
+            <p><b>Agilidade:</b> ${get("agilidade")} s</p>
+            <p><b>Sentar e Alcançar:</b> ${get("sentar-alcancar")} cm</p>
+            <p><b>Resistência Abdominal:</b> ${get("res-abdominal")} repetições</p>
+            <p><b>Medicineball:</b> ${get("medicineball")} m</p>
+            <p><b>Salto Horizontal:</b> ${get("salto-horizontal")} cm</p>
+            <p><b>Corrida 20m:</b> ${get("corrida-20m")} s</p>
+            <p><b>Agilidade (Quadrado):</b> ${get("quadrado")} s</p>
+            <p><b>Corrida 6 Min:</b> ${get("corrida-6min")} m</p>
+        `;
+    }
+
+    document.getElementById("restart").addEventListener("click", () => {
+        document.querySelectorAll("input, select").forEach(el => {
+            el.value = "";
+            el.style.backgroundColor = "white";
+        });
+        document.querySelectorAll(".error").forEach(e => e.textContent = "");
+        showForm("form1");
+    });
+    </script>
+</body>
+</html>
